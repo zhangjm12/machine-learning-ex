@@ -18,7 +18,16 @@ grad = zeros(size(theta));
 %               derivatives of the cost w.r.t. each parameter in theta
 
 
+temp1 = -1 * (y .* log(sigmoid(X * theta)));
+temp2 = (1 - y) .* log(1 - sigmoid(X * theta));
 
+thetaT = theta;
+thetaT(1) = 0;
+regulation = sum(thetaT .^ 2) * (lambda / (2 * m));
+
+J = sum(temp1 - temp2) / m + regulation;
+
+grad = (X' * (sigmoid(X * theta) - y)) * (1/m) + thetaT * (lambda / m);
 
 
 
